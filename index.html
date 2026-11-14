@@ -1,263 +1,110 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Секретный тест</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body {
-            background-color: #18181b;
-            color: #111111;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        .collage {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-        .collage img {
-            position: absolute;
-            width: 260px;
-            height: 360px;
-            object-fit: cover;
-            border: 4px solid #ffffff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-            opacity: 0.72;
-        }
-        .p1 { top: -20px; left: -20px; transform: rotate(-6deg); }
-        .p2 { top: -25px; left: 38%; transform: rotate(4deg); }
-        .p3 { top: -15px; right: -20px; transform: rotate(7deg); }
-        .p4 { bottom: -25px; left: -15px; transform: rotate(5deg); }
-        .p5 { bottom: -30px; left: 40%; transform: rotate(-4deg); }
-        .p6 { bottom: -20px; right: -20px; transform: rotate(-7deg); }
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle, rgba(18,18,22,0.45) 0%, rgba(18,18,22,0.82) 100%);
-            z-index: 2;
-            pointer-events: none;
-        }
-        #pin-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.96);
-            padding: 35px 40px;
-            border: 3px solid #111111;
-            box-shadow: 8px 8px 0px #111111;
-        }
-        #pin-screen h2 { text-transform: uppercase; letter-spacing: 1px; font-size: 20px; color: #111111; }
-        #pin-input {
-            padding: 12px 20px;
-            font-size: 18px;
-            border: 2px solid #111111;
-            background: #f4f4f5;
-            color: #111111;
-            text-align: center;
-            outline: none;
-            font-weight: bold;
-        }
-        .screen {
-            display: none;
-            width: 92%;
-            max-width: 600px;
-            min-height: 360px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 24px;
-            z-index: 10;
-            padding: 20px;
-        }
-        .screen.active { display: flex; }
-        .center-text {
-            font-size: 24px;
-            font-weight: 800;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.96);
-            color: #111111;
-            padding: 20px 28px;
-            border: 3px solid #111111;
-            box-shadow: 6px 6px 0px #111111;
-            line-height: 1.35;
-            width: 100%;
-            max-width: 460px;
-        }
-        .btn-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 500px;
-            gap: 16px;
-        }
-        .btn-row.center-only { justify-content: center; }
-        button {
-            background-color: #18181b;
-            color: #ffffff;
-            border: 2px solid #ffffff;
-            box-shadow: 4px 4px 0px #111111;
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            min-width: 170px;
-            text-align: center;
-        }
-        .btn-gray { background-color: #e4e4e7; color: #111111; border-color: #111111; }
-        .btn-blue { background-color: #3b5998; color: #ffffff; border-color: #111111; }
-        button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000000; filter: brightness(1.1); }
-        button:active { transform: translate(2px, 2px); }
-        .back-btn {
-            margin-top: 5px;
-            font-size: 13px;
-            padding: 8px 16px;
-            min-width: auto;
-            background: #ffffff;
-            color: #111111;
-            border: 2px solid #111111;
-        }
-        @media (max-width: 600px) {
-            .collage img { width: 155px; height: 220px; }
-            .p2, .p5 { left: 30%; }
-            .center-text { font-size: 20px; padding: 16px 20px; }
-            .btn-row { gap: 10px; }
-            button { min-width: 130px; padding: 12px 10px; font-size: 14px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Секретный тест</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
+body{background:#18181b;color:#111;height:100vh;width:100vw;overflow:hidden;display:flex;justify-content:center;align-items:center;position:relative}
+.collage{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.collage img{position:absolute;width:260px;height:360px;object-fit:cover;border:4px solid #fff;box-shadow:0 10px 25px rgba(0,0,0,.8);opacity:.72}
+.p1{top:-20px;left:-20px;transform:rotate(-6deg)}.p2{top:-25px;left:38%;transform:rotate(4deg)}.p3{top:-15px;right:-20px;transform:rotate(7deg)}
+.p4{bottom:-25px;left:-15px;transform:rotate(5deg)}.p5{bottom:-30px;left:40%;transform:rotate(-4deg)}.p6{bottom:-20px;right:-20px;transform:rotate(-7deg)}
+.overlay{position:fixed;inset:0;background:radial-gradient(circle,rgba(18,18,22,.45) 0%,rgba(18,18,22,.82) 100%);z-index:2;pointer-events:none}
+#pin-screen{display:flex;flex-direction:column;align-items:center;gap:16px;z-index:100;background:rgba(255,255,255,.96);padding:35px 40px;border:3px solid #111;box-shadow:8px 8px 0 #111}
+#pin-screen h2{text-transform:uppercase;letter-spacing:1px;font-size:20px;color:#111}
+#pin-input{padding:12px 20px;font-size:18px;border:2px solid #111;background:#f4f4f5;color:#111;text-align:center;outline:none;font-weight:bold}
+.screen{display:none;width:92%;max-width:600px;min-height:360px;flex-direction:column;justify-content:center;align-items:center;gap:24px;z-index:10;padding:20px}
+.screen.active{display:flex}
+.center-text{font-size:24px;font-weight:800;text-align:center;background:rgba(255,255,255,.96);color:#111;padding:20px 28px;border:3px solid #111;box-shadow:6px 6px 0 #111;line-height:1.35;width:100%;max-width:460px}
+.special-img{width:240px;height:240px;object-fit:cover;border:4px solid #fff;box-shadow:8px 8px 0 #111;background:#fff}
+.btn-row{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:500px;gap:16px}
+.btn-row.center-only{justify-content:center}
+button{background:#18181b;color:#fff;border:2px solid #fff;box-shadow:4px 4px 0 #111;padding:14px 20px;font-size:16px;font-weight:600;cursor:pointer;transition:.15s;min-width:170px;text-align:center}
+.btn-gray{background:#e4e4e7;color:#111;border-color:#111}.btn-blue{background:#3b5998;color:#fff;border-color:#111}
+button:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #000;filter:brightness(1.1)}
+button:active{transform:translate(2px,2px)}
+.back-btn{margin-top:5px;font-size:13px;padding:8px 16px;min-width:auto;background:#fff;color:#111;border:2px solid #111}
+@media(max-width:600px){.collage img{width:155px;height:220px}.p2,.p5{left:30%}.center-text{font-size:20px;padding:16px 20px}.special-img{width:190px;height:190px}.btn-row{gap:10px}button{min-width:130px;padding:12px 10px;font-size:14px}}
+</style>
 </head>
 <body>
+<div class="collage">
+<img src="1.jpg.jpg" class="p1" alt=""><img src="2.jpg.jpg" class="p2" alt=""><img src="3.jpg.jpg" class="p3" alt="">
+<img src="4.jpg.jpg" class="p4" alt=""><img src="5.jpg.jpg" class="p5" alt=""><img src="6.jpg.jpg" class="p6" alt="">
+</div>
+<div class="overlay"></div>
 
-    <div class="collage">
-        <img src="1.jpg.jpg" class="p1" alt="">
-        <img src="2.jpg.jpg" class="p2" alt="">
-        <img src="3.jpg.jpg" class="p3" alt="">
-        <img src="4.jpg.jpg" class="p4" alt="">
-        <img src="5.jpg.jpg" class="p5" alt="">
-        <img src="6.jpg.jpg" class="p6" alt="">
-    </div>
-    <div class="overlay"></div>
+<div id="pin-screen">
+<h2>Введите секретный код</h2>
+<input type="password" id="pin-input" placeholder="********">
+<button onclick="checkPin()">Войти</button>
+<p id="pin-error" style="color:#dc2626;font-weight:bold;display:none">Неверный код!</p>
+</div>
 
-    <div id="pin-screen">
-        <h2>Введите секретный код</h2>
-        <input type="password" id="pin-input" placeholder="********">
-        <button onclick="checkPin()">Войти</button>
-        <p id="pin-error" style="color: #dc2626; font-weight: bold; display: none;">Неверный код!</p>
-    </div>
+<div id="screen-main" class="screen">
+<div class="btn-row">
+<button onclick="chooseOption('Алёна','screen-alena')">1. Алёна</button>
+<button class="btn-gray" onclick="chooseOption('Оно','screen-ono')">2. Оно</button>
+</div>
+<div class="center-text">Кем ты себя позиционируешь?</div>
+<div class="btn-row">
+<button class="btn-blue" onclick="chooseOption('Вова..','screen-vova')">3. Вова..</button>
+<button onclick="chooseOption('Нету такого ответа','screen-no-answer')">4. Нету такого ответа</button>
+</div>
+</div>
 
-    <div id="screen-main" class="screen">
-        <div class="btn-row">
-            <button onclick="chooseOption('Алёна', 'screen-alena')">1. Алёна</button>
-            <button class="btn-gray" onclick="chooseOption('Оно', 'screen-ono')">2. Оно</button>
-        </div>
-        <div class="center-text">Кем ты себя позиционируешь?</div>
-        <div class="btn-row">
-            <button class="btn-blue" onclick="chooseOption('Вова..', 'screen-vova')">3. Вова..</button>
-            <button onclick="chooseOption('Нету такого ответа', 'screen-no-answer')">4. Нету такого ответа</button>
-        </div>
-    </div>
+<div id="screen-alena" class="screen">
+<div class="btn-row">
+<button onclick="finalClick('Ветка Алёна -> Сто процентов')">1. Сто процентов</button>
+<button class="btn-gray" onclick="finalClick('Ветка Алёна -> Затрудняюсь ответить')">2. Затрудняюсь ответить</button>
+</div>
+<div class="center-text">Уверенна?</div>
+<div class="btn-row center-only">
+<button class="btn-blue" onclick="finalClick('Ветка Алёна -> Иди домой')">3. Иди домой</button>
+</div>
+<button class="back-btn" onclick="goBack()">← В начало</button>
+</div>
 
-    <div id="screen-alena" class="screen">
-        <div class="btn-row">
-            <button onclick="finalClick('Ветка Алёна -> Сто процентов')">1. Сто процентов</button>
-            <button class="btn-gray" onclick="finalClick('Ветка Алёна -> Затрудняюсь ответить')">2. Затрудняюсь ответить</button>
-        </div>
-        <div class="center-text">Уверенна?</div>
-        <div class="btn-row center-only">
-            <button class="btn-blue" onclick="finalClick('Ветка Алёна -> Иди домой')">3. Иди домой</button>
-        </div>
-        <button class="back-btn" onclick="goBack()">← В начало</button>
-    </div>
+<div id="screen-ono" class="screen">
+<div class="center-text">Так то ты себя позиционируешь она/её</div>
+<div class="btn-row">
+<button onclick="finalClick('Ветка Оно -> Извини меня пожалуйста')">1. Извини меня пожалуйста</button>
+<button class="btn-gray" onclick="finalClick('Ветка Оно -> Прошу прощения')">2. Прошу прощения</button>
+</div>
+<button class="back-btn" onclick="goBack()">← В начало</button>
+</div>
 
-    <div id="screen-ono" class="screen">
-        <div class="center-text">Так то ты себя позиционируешь она/её</div>
-        <div class="btn-row">
-            <button onclick="finalClick('Ветка Оно -> Извини меня пожалуйста')">1. Извини меня пожалуйста</button>
-            <button class="btn-gray" onclick="finalClick('Ветка Оно -> Прошу прощения')">2. Прошу прощения</button>
-        </div>
-        <button class="back-btn" onclick="goBack()">← В начало</button>
-    </div>
+<div id="screen-vova" class="screen">
+<div class="btn-row">
+<button onclick="finalClick('Ветка Вова -> Он в прошлом')">1. Он в прошлом</button>
+<button class="btn-blue" onclick="finalClick('Ветка Вова -> Вову')">2. Вову</button>
+</div>
+<div class="center-text">А кого бы ты из класса …</div>
+<div class="btn-row center-only">
+<button class="btn-gray" onclick="finalClick('Ветка Вова -> Подумаю, поразмышляю')">3. Подумаю, поразмышляю</button>
+</div>
+<button class="back-btn" onclick="goBack()">← В начало</button>
+</div>
 
-    <div id="screen-vova" class="screen">
-        <div class="btn-row">
-            <button onclick="finalClick('Ветка Вова -> Он в прошлом')">1. Он в прошлом</button>
-            <button class="btn-blue" onclick="finalClick('Ветка Вова -> Вову')">2. Вову</button>
-        </div>
-        <div class="center-text">А кого бы ты из класса …</div>
-        <div class="btn-row center-only">
-            <button class="btn-gray" onclick="finalClick('Ветка Вова -> Подумаю, поразмышляю')">3. Подумаю, поразмышляю</button>
-        </div>
-        <button class="back-btn" onclick="goBack()">← В начало</button>
-    </div>
+<div id="screen-no-answer" class="screen">
+<img src="gren.jpg" class="special-img" alt="gren">
+<div class="center-text">Плохо Алёна, пробуй снова</div>
+<div class="btn-row center-only">
+<button class="btn-blue" onclick="goBack()">Попробовать снова</button>
+</div>
+</div>
 
-    <div id="screen-no-answer" class="screen">
-        <div class="center-text">Плохо Алёна, пробуй снова</div>
-        <div class="btn-row center-only">
-            <button class="btn-blue" onclick="goBack()">Попробовать снова</button>
-        </div>
-    </div>
-
-    <script>
-        const SECRET_PIN = "11092012";
-        const TG_BOT_TOKEN = "9154005315:AAGAd-uNHs4foLlm03Y-xf11Ik1TYwSU2OU";
-        const TG_CHAT_ID = "7732801430";
-
-        function checkPin() {
-            const input = document.getElementById('pin-input').value;
-            if (input === SECRET_PIN) {
-                document.getElementById('pin-screen').style.display = 'none';
-                showScreen('screen-main');
-                sendTelegram("🔓 Введен правильный ПИН-КОД!");
-            } else {
-                document.getElementById('pin-error').style.display = 'block';
-                sendTelegram("⚠️ Неверный пин-код: " + input);
-            }
-        }
-
-        document.getElementById('pin-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') checkPin();
-        });
-
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        function chooseOption(buttonName, nextScreenId) {
-            sendTelegram("🔘 Первый вопрос: «" + buttonName + "»");
-            showScreen(nextScreenId);
-        }
-
-        function finalClick(actionText) {
-            sendTelegram("✅ Выбор сделан: " + actionText);
-            alert("Ответ принят!");
-        }
-
-        function goBack() {
-            sendTelegram("🔄 Возврат в начало");
-            showScreen('screen-main');
-        }
-
-        function sendTelegram(messageText) {
-            const url = `https://telegram.org{TG_BOT_TOKEN}/sendMessage`;
-            fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: TG_CHAT_ID, text: messageText })
-            }).catch(err => console.error(err));
-        }
-    </script>
+<script>
+const SECRET_PIN="11092012",TG_BOT_TOKEN="9154005315:AAGAd-uNHs4foLlm03Y-xf11Ik1TYwSU2OU",TG_CHAT_ID="7732801430";
+function checkPin(){const i=document.getElementById('pin-input').value;if(i===SECRET_PIN){document.getElementById('pin-screen').style.display='none';showScreen('screen-main');sendTelegram("🔓 Введен правильный ПИН-КОД!")}else{document.getElementById('pin-error').style.display='block';sendTelegram("⚠️ Неверный пин-код: "+i)}}
+document.getElementById('pin-input').addEventListener('keypress',e=>{if(e.key==='Enter')checkPin()});
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function chooseOption(b,id){sendTelegram("🔘 Первый вопрос: «"+b+"»");showScreen(id)}
+function finalClick(t){sendTelegram("✅ Выбор сделан: "+t);alert("Ответ принят!")}
+function goBack(){sendTelegram("🔄 Возврат в начало");showScreen('screen-main')}
+function sendTelegram(t){fetch(`https://telegram.org{TG_BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT_ID,text:t})}).catch(e=>console.error(e))}
+</script>
 </body>
 </html>

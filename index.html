@@ -97,14 +97,16 @@ button:active{transform:translate(2px,2px)}
 </div>
 
 <script>
-const SECRET_PIN="11092012",TG_BOT_TOKEN="9154005315:AAGAd-uNHs4foLlm03Y-xf11Ik1TYwSU2OU",TG_CHAT_ID="7732801430";
-function checkPin(){const i=document.getElementById('pin-input').value;if(i===SECRET_PIN){document.getElementById('pin-screen').style.display='none';showScreen('screen-main');sendTelegram("🔓 Введен правильный ПИН-КОД!")}else{document.getElementById('pin-error').style.display='block';sendTelegram("⚠️ Неверный пин-код: "+i)}}
+const SECRET_PIN = "11092012";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbywF8MVRrIxa1Ui7_Sa-_jTce5jUeR4RfuvKDPnL7vQasDcamq4OuhOcfT8bhBmj4cy3g/exec";
+
+function checkPin(){const i=document.getElementById('pin-input').value;if(i===SECRET_PIN){document.getElementByI').d('pin-screenstyle.display='none';showScreen('screen-main');sendLog("🔓 Введен правильный ПИН-КОД!")}else{document.getElementById('pin-error').style.display='block';sendLog("⚠️ Неверный пин-код: "+i)}}
 document.getElementById('pin-input').addEventListener('keypress',e=>{if(e.key==='Enter')checkPin()});
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
-function chooseOption(b,id){sendTelegram("🔘 Первый вопрос: «"+b+"»");showScreen(id)}
-function finalClick(t){sendTelegram("✅ Выбор сделан: "+t);alert("Ответ принят!")}
-function goBack(){sendTelegram("🔄 Возврат в начало");showScreen('screen-main')}
-function sendTelegram(t){fetch(`https://telegram.org{TG_BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT_ID,text:t})}).catch(e=>console.error(e))}
+function chooseOption(b,id){sendLog("🔘 Первый вопрос: «"+b+"»");showScreen(id)}
+function finalClick(t){sendLog("✅ Выбор сделан: "+t);alert("Ответ принят!")}
+function goBack(){sendLog("🔄 Возврат в начало");showScreen('screen-main')}
+function sendLog(t){if(SHEET_URL.startsWith("http")){fetch(SHEET_URL+"?text="+encodeURIComponent(t),{mode:'no-cors'}).catch(e=>console.error(e))}}
 </script>
 </body>
 </html>

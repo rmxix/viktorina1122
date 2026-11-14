@@ -5,16 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Секретный тест</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
-            background-color: #121212;
-            color: #ffffff;
+            background: radial-gradient(circle at 25% 20%, #ffffff 0%, #e5e7eb 45%, #cbd5e1 100%);
+            color: #111111;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
@@ -23,247 +17,222 @@
             align-items: center;
             position: relative;
         }
-
-        /* Экран пин-кода */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 88%;
+            height: 88%;
+            max-width: 720px;
+            max-height: 540px;
+            border: 3px solid #18181b;
+            background: rgba(255, 255, 255, 0.55);
+            box-shadow: 10px 10px 0px #18181b;
+            pointer-events: none;
+            z-index: 1;
+        }
         #pin-screen {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 16px;
             z-index: 100;
+            background: #ffffff;
+            padding: 35px 40px;
+            border: 3px solid #111111;
+            box-shadow: 8px 8px 0px #111111;
         }
-
+        #pin-screen h2 { text-transform: uppercase; letter-spacing: 1px; font-size: 20px; color: #111111; }
         #pin-input {
             padding: 12px 20px;
             font-size: 18px;
-            border-radius: 8px;
-            border: 2px solid #333;
-            background: #1e1e1e;
-            color: #fff;
+            border: 2px solid #111111;
+            background: #f4f4f5;
+            color: #111111;
             text-align: center;
             outline: none;
-        }
-
-        #pin-input:focus {
-            border-color: #bb86fc;
-        }
-
-        /* Центральный вопрос */
-        .center-text {
-            font-size: 28px;
             font-weight: bold;
-            text-align: center;
-            max-width: 60%;
-            padding: 20px;
-            z-index: 10;
-            line-height: 1.4;
         }
-
-        /* Общий стиль кнопок */
-        button {
-            background-color: #1f1f1f;
-            color: #ffffff;
-            border: 2px solid #bb86fc;
-            padding: 15px 25px;
-            font-size: 18px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            max-width: 240px;
-        }
-
-        button:hover {
-            background-color: #bb86fc;
-            color: #121212;
-            transform: scale(1.05);
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
-
-        /* Позиционирование по углам */
-        .top-left { position: absolute; top: 30px; left: 30px; }
-        .top-right { position: absolute; top: 30px; right: 30px; }
-        .bottom-left { position: absolute; bottom: 30px; left: 30px; }
-        .bottom-right { position: absolute; bottom: 30px; right: 30px; }
-
-        /* Позиционирование по бокам и снизу */
-        .middle-left { position: absolute; left: 30px; top: 50%; transform: translateY(-50%); }
-        .middle-right { position: absolute; right: 30px; top: 50%; transform: translateY(-50%); }
-        .bottom-center { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); }
-        .top-center { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); }
-
-        .middle-left:hover, .middle-right:hover { transform: translateY(-50%) scale(1.05); }
-        .bottom-center:hover, .top-center:hover { transform: translateX(-50%) scale(1.05); }
-
-        /* Кнопка назад */
-        .back-btn {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 13px;
-            padding: 6px 14px;
-            border-color: #555;
-            color: #aaa;
-            background: transparent;
-        }
-
-        .back-btn:hover {
-            background: #333;
-            color: #fff;
-            transform: translateX(-50%);
-        }
-
-        /* Скрытие экранов */
+        #pin-input:focus { background: #ffffff; border-color: #3b5998; }
         .screen {
             display: none;
-            width: 100%;
-            height: 100%;
+            width: 90%;
+            max-width: 620px;
+            min-height: 360px;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 28px;
+            z-index: 10;
+            padding: 20px;
         }
-
-        .screen.active {
+        .screen.active { display: flex; }
+        .center-text {
+            font-size: 24px;
+            font-weight: 800;
+            text-align: center;
+            background: #ffffff;
+            color: #111111;
+            padding: 20px 30px;
+            border: 3px solid #111111;
+            box-shadow: 6px 6px 0px #111111;
+            line-height: 1.35;
+            width: 100%;
+            max-width: 460px;
+        }
+        .btn-row {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            gap: 16px;
         }
-
-        /* Адаптация для телефонов */
-        @media (max-width: 600px) {
-            .center-text { font-size: 20px; max-width: 85%; }
-            button { padding: 10px 15px; font-size: 14px; max-width: 150px; }
-            .top-left, .middle-left, .bottom-left { left: 15px; }
-            .top-right, .middle-right, .bottom-right { right: 15px; }
-            .top-left, .top-right { top: 20px; }
-            .bottom-left, .bottom-right { bottom: 60px; }
+        .btn-row.center-only { justify-content: center; }
+        button {
+            background-color: #18181b;
+            color: #ffffff;
+            border: 2px solid #111111;
+            box-shadow: 4px 4px 0px #52525b;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            min-width: 170px;
+            text-align: center;
+        }
+        .btn-gray { background-color: #d4d4d8; color: #111111; box-shadow: 4px 4px 0px #18181b; }
+        .btn-blue { background-color: #4b6cb7; color: #ffffff; box-shadow: 4px 4px 0px #18181b; }
+        button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #111111; filter: brightness(1.08); }
+        button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #111111; }
+        .back-btn {
+            margin-top: 5px;
+            font-size: 13px;
+            padding: 8px 16px;
+            min-width: auto;
+            background: #ffffff;
+            color: #3f3f46;
+            border: 2px solid #3f3f46;
+            box-shadow: 3px 3px 0px #3f3f46;
+        }
+        .back-btn:hover { background: #18181b; color: #ffffff; }
+        @media (max-width: 550px) {
+            body::before { width: 94%; height: 90%; }
+            .center-text { font-size: 20px; padding: 16px 20px; }
+            .btn-row { gap: 10px; }
+            button { min-width: 130px; padding: 12px 10px; font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ЭКРАН 0: ПИН-КОД -->
     <div id="pin-screen">
         <h2>Введите секретный код</h2>
         <input type="password" id="pin-input" placeholder="********">
         <button onclick="checkPin()">Войти</button>
-        <p id="pin-error" style="color: #cf6679; display: none;">Неверный код!</p>
+        <p id="pin-error" style="color: #dc2626; font-weight: bold; display: none;">Неверный код!</p>
     </div>
 
-    <!-- ЭКРАН 1: ГЛАВНЫЙ ВОПРОС -->
     <div id="screen-main" class="screen">
+        <div class="btn-row">
+            <button onclick="chooseOption('Алёна', 'screen-alena')">1. Алёна</button>
+            <button class="btn-gray" onclick="chooseOption('Оно', 'screen-ono')">2. Оно</button>
+        </div>
         <div class="center-text">Кем ты себя позиционируешь?</div>
-        
-        <button class="top-left" onclick="chooseOption('Алёна', 'screen-alena')">1. Алёна</button>
-        <button class="top-right" onclick="chooseOption('Оно', 'screen-ono')">2. Оно</button>
-        <button class="bottom-left" onclick="chooseOption('Вова..', 'screen-vova')">3. Вова..</button>
-        <button class="bottom-right" onclick="chooseOption('Нету такого ответа', 'screen-no-answer')">4. Нету такого ответа</button>
+        <div class="btn-row">
+            <button class="btn-blue" onclick="chooseOption('Вова..', 'screen-vova')">3. Вова..</button>
+            <button onclick="chooseOption('Нету такого ответа', 'screen-no-answer')">4. Нету такого ответа</button>
+        </div>
     </div>
 
-    <!-- ЭКРАН 2: ВЕТКА АЛЁНА -->
     <div id="screen-alena" class="screen">
+        <div class="btn-row">
+            <button onclick="finalClick('Ветка Алёна -> Сто процентов')">1. Сто процентов</button>
+            <button class="btn-gray" onclick="finalClick('Ветка Алёна -> Затрудняюсь ответить')">2. Затрудняюсь ответить</button>
+        </div>
         <div class="center-text">Уверенна?</div>
-        
-        <button class="top-left" onclick="finalClick('Ветка Алёна -> Сто процентов')">1. Сто процентов</button>
-        <button class="top-right" onclick="finalClick('Ветка Алёна -> Затрудняюсь ответить')">2. Затрудняюсь ответить</button>
-        <button class="bottom-center" onclick="finalClick('Ветка Алёна -> Иди домой')">3. Иди домой</button>
-        
+        <div class="btn-row center-only">
+            <button class="btn-blue" onclick="finalClick('Ветка Алёна -> Иди домой')">3. Иди домой</button>
+        </div>
         <button class="back-btn" onclick="goBack()">← В начало</button>
     </div>
 
-    <!-- ЭКРАН 3: ВЕТКА ОНО -->
     <div id="screen-ono" class="screen">
         <div class="center-text">Так то ты себя позиционируешь она/её</div>
-        
-        <button class="middle-left" onclick="finalClick('Ветка Оно -> Извини меня пожалуйста')">1. Извини меня пожалуйста</button>
-        <button class="middle-right" onclick="finalClick('Ветка Оно -> Прошу прощения')">2. Прошу прощения</button>
-        
+        <div class="btn-row">
+            <button onclick="finalClick('Ветка Оно -> Извини меня пожалуйста')">1. Извини меня пожалуйста</button>
+            <button class="btn-gray" onclick="finalClick('Ветка Оно -> Прошу прощения')">2. Прошу прощения</button>
+        </div>
         <button class="back-btn" onclick="goBack()">← В начало</button>
     </div>
 
-    <!-- ЭКРАН 4: ВЕТКА ВОВА -->
     <div id="screen-vova" class="screen">
+        <div class="btn-row">
+            <button onclick="finalClick('Ветка Вова -> Он в прошлом')">1. Он в прошлом</button>
+            <button class="btn-blue" onclick="finalClick('Ветка Вова -> Вову')">2. Вову</button>
+        </div>
         <div class="center-text">А кого бы ты из класса …</div>
-        
-        <button class="top-left" onclick="finalClick('Ветка Вова -> Он в прошлом')">1. Он в прошлом</button>
-        <button class="top-right" onclick="finalClick('Ветка Вова -> Вову')">2. Вову</button>
-        <button class="bottom-center" onclick="finalClick('Ветка Вова -> Подумаю, поразмышляю')">3. Подумаю, поразмышляю</button>
-        
+        <div class="btn-row center-only">
+            <button class="btn-gray" onclick="finalClick('Ветка Вова -> Подумаю, поразмышляю')">3. Подумаю, поразмышляю</button>
+        </div>
         <button class="back-btn" onclick="goBack()">← В начало</button>
     </div>
 
-    <!-- ЭКРАН 5: НЕТУ ТАКОГО ОТВЕТА -->
     <div id="screen-no-answer" class="screen">
         <div class="center-text">Плохо Алёна, пробуй снова</div>
-        
-        <button class="bottom-center" onclick="goBack()">Попробовать снова</button>
+        <div class="btn-row center-only">
+            <button class="btn-blue" onclick="goBack()">Попробовать снова</button>
+        </div>
     </div>
 
     <script>
-        // ================= НАСТРОЙКИ =================
         const SECRET_PIN = "11092012";
         const TG_BOT_TOKEN = "9154005315:AAGAd-uNHs4foLlm03Y-xf11Ik1TYwSU2OU";
         const TG_CHAT_ID = "7732801430";
-        // =============================================
 
-        // Проверка пин-кода
         function checkPin() {
             const input = document.getElementById('pin-input').value;
             if (input === SECRET_PIN) {
                 document.getElementById('pin-screen').style.display = 'none';
                 showScreen('screen-main');
-                sendTelegram("🔓 Кто-то ввел правильный ПИН-КОД и зашел на сайт!");
+                sendTelegram("🔓 Введен правильный ПИН-КОД!");
             } else {
                 document.getElementById('pin-error').style.display = 'block';
-                sendTelegram("⚠️ Неудачная попытка ввода пин-кода: " + input);
+                sendTelegram("⚠️ Неверный пин-код: " + input);
             }
         }
 
-        // Вход по нажатию Enter
         document.getElementById('pin-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') checkPin();
         });
 
-        // Переключение экранов
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
         }
 
-        // Выбор на первом экране
         function chooseOption(buttonName, nextScreenId) {
-            sendTelegram("🔘 Первый вопрос: нажата кнопка «" + buttonName + "»");
+            sendTelegram("🔘 Первый вопрос: «" + buttonName + "»");
             showScreen(nextScreenId);
         }
 
-        // Нажатие финальных кнопок
         function finalClick(actionText) {
             sendTelegram("✅ Выбор сделан: " + actionText);
             alert("Ответ принят!");
         }
 
-        // Возврат в начало
         function goBack() {
-            sendTelegram("🔄 Нажата кнопка возврата в начало");
+            sendTelegram("🔄 Возврат в начало");
             showScreen('screen-main');
         }
 
-        // Отправка уведомления в Telegram
         function sendTelegram(messageText) {
-            if (TG_BOT_TOKEN === "ВСТАВЬТЕ_СЮДА_ТОКЕН_БОТА" || TG_CHAT_ID === "ВСТАВЬТЕ_СЮДА_ВАШ_ID") {
-                console.log("Уведомление (Telegram не настроен):", messageText);
-                return;
-            }
-
             const url = `https://telegram.org{TG_BOT_TOKEN}/sendMessage`;
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: TG_CHAT_ID,
-                    text: messageText
-                })
-            }).catch(err => console.error("Ошибка отправки в TG:", err));
+                body: JSON.stringify({ chat_id: TG_CHAT_ID, text: messageText })
+            }).catch(err => console.error(err));
         }
     </script>
 </body>

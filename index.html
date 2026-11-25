@@ -1,1 +1,166 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Тест</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#fdf2f6;--mute:#c9bad4;--pink:#ff6b9a;--line:rgba(255,255,255,.2)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:#18181b}
+body{font-family:Rubik,system-ui,sans-serif;color:var(--ink);overflow-x:hidden}
+.collage{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.p{position:absolute;width:44vw;max-width:250px;aspect-ratio:5/7;object-fit:cover;border:4px solid #fff;border-radius:14px;opacity:.82;box-shadow:0 14px 34px rgba(0,0,0,.5)}
+.p1{top:-2vh;left:-5vw;transform:rotate(-6deg)}.p2{top:-3vh;left:37%;transform:rotate(4deg)}.p3{top:-2vh;right:-5vw;transform:rotate(7deg)}
+.p4{bottom:-3vh;left:-5vw;transform:rotate(5deg)}.p5{bottom:-4vh;left:39%;transform:rotate(-4deg)}.p6{bottom:-2vh;right:-5vw;transform:rotate(-7deg)}
+.ov{position:fixed;inset:0;z-index:1;background:rgba(18,15,26,.5);pointer-events:none}
+#app{position:relative;z-index:2;min-height:100svh;display:grid;place-items:center;max-width:460px;margin:0 auto;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+.card{width:100%;padding:20px 16px;border-radius:28px;background:rgba(22,17,32,.58);border:1px solid var(--line);
+ backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);box-shadow:0 24px 70px rgba(0,0,0,.55);animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+.q{font-size:clamp(22px,6.2vw,28px);font-weight:800;line-height:1.2;margin:4px 4px 14px;text-align:center;min-height:2.4em}
+.q.typing::after{content:"";display:inline-block;width:3px;height:1em;margin-left:3px;background:var(--pink);vertical-align:-.12em;animation:blink .7s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.opt{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0;padding:15px 16px;border-radius:18px;border:1px solid var(--line);
+ background:rgba(255,255,255,.1);color:var(--ink);font:600 17px Rubik,system-ui,sans-serif;text-align:left;cursor:pointer;
+ transition:transform .15s,background .2s,border-color .2s,opacity .25s;animation:rise .45s both}
+.opt:hover{background:rgba(255,107,154,.22);border-color:var(--pink)}
+.opt:active{transform:scale(.97)}
+.n{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.16);font-size:14px;font-weight:800}
+.opt.chosen{background:var(--pink);border-color:var(--pink);color:#2a0f1b;transform:scale(1.03)}
+.opt.chosen .n{background:rgba(42,15,27,.2)}
+.opt.dim{opacity:.3;pointer-events:none}
+.opt:focus-visible,.back:focus-visible,#in:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.shake{animation:shake .45s both!important}
+@keyframes shake{0%,100%{translate:0}15%{translate:-9px}35%{translate:8px}55%{translate:-6px}75%{translate:4px}}
+.back{display:block;margin:10px auto 0;padding:10px 14px;background:none;border:0;color:var(--mute);font:500 15px Rubik,system-ui,sans-serif;cursor:pointer}
+.back:hover{color:var(--ink)}
+.go{justify-content:center;background:var(--pink);border-color:var(--pink);color:#2a0f1b;font-weight:800}
+.go:hover{background:#ff82ab}
+.pic{display:block;width:100%;max-height:38vh;object-fit:contain;margin:0 auto 14px;border-radius:20px;border:3px solid #fff;box-shadow:0 12px 30px rgba(0,0,0,.5);animation:rise .6s both}
+#in{width:100%;margin:6px 0 2px;padding:16px 18px;border-radius:18px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--ink);font:700 20px Rubik,system-ui,sans-serif;text-align:center;letter-spacing:.2em}
+.err{min-height:1.5em;margin:6px 0;text-align:center;color:#ff8fb0;font-weight:700}
+.chip{display:block;width:max-content;margin:0 auto 10px;padding:3px 12px;border-radius:99px;background:rgba(255,107,154,.22);border:1px solid var(--pink);font-weight:800}
+.ok{width:76px;height:76px;margin:6px auto 14px;border-radius:50%;background:var(--pink);display:grid;place-items:center;animation:pop .5s cubic-bezier(.2,1.6,.4,1) both}
+.ok svg{width:40px;height:40px;stroke:#2a0f1b;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="collage" aria-hidden="true">
+<img class="p p1" src="1.jpg.jpg" alt=""><img class="p p2" src="2.jpg.jpg" alt=""><img class="p p3" src="3.jpg.jpg" alt="">
+<img class="p p4" src="4.jpg.jpg" alt=""><img class="p p5" src="5.jpg.jpg" alt=""><img class="p p6" src="6.jpg.jpg" alt="">
+</div>
+<div class="ov"></div>
+<main id="app"></main>
+<script>
+const CODE = "11092012";
+const U = "https://google.com"; /* сюда можно подставить свой адрес для приёма ответов */
+function log(t){ try { fetch(U + "?text=" + encodeURIComponent(t), {mode: "no-cors"}).catch(function(){}); } catch (e) {} }
 
+const S = {
+  q1: {title: "Кем ты себя позиционируешь?", log: "Вопрос 1: ", opts: [
+    {t: "Алёна", go: "sure"}, {t: "Оно", go: "she"}, {t: "Вова..", go: "klass"}, {t: "Нету такого ответа", go: "fail", dodge: 3, say: "всегда есть ответ ален..", x: 1}]},
+  sure: {title: "Уверенна?", back: 1, pre: "Алёна", opts: [
+    {t: "Сто процентов"}, {t: "Затрудняюсь ответить"}, {t: "Иди домой"}]},
+  she: {title: "Так то ты себя позиционируешь она/её", back: 1, pre: "Оно", opts: [
+    {t: "Извини меня пожалуйста"}, {t: "Прошу прощения"}]},
+  klass: {title: "А кого бы ты из класса …", back: 1, pre: "Вова", opts: [
+    {t: "Он в прошлом", say: "верно"}, {t: "Вову", say: "Ну, я тебя понял алена", x: 1}, {t: "Подумаю, поразмышляю", say: "ты еще блять думать будешь", x: 1}]}
+};
+
+const app = document.getElementById("app");
+const calm = matchMedia("(prefers-reduced-motion:reduce)").matches;
+let tries = 1, dodges = 0, busy = false;
+
+const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+const shake = b => { b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); };
+const mount = card => { app.replaceChildren(card); window.scrollTo(0, 0); busy = false; };
+
+function typeText(node, text, done) {
+  if (calm) { node.textContent = text; done(); return; }
+  node.classList.add("typing"); let i = 0;
+  const id = setInterval(() => {
+    node.textContent = text.slice(0, ++i);
+    if (i >= text.length) { clearInterval(id); node.classList.remove("typing"); done(); }
+  }, 24);
+}
+
+function pick(s, o, b, box) {
+  if (busy) return;
+  if (o.dodge && dodges < o.dodge) {
+    dodges++; shake(b); buzz([30, 40, 30]);
+    b.style.transform = "translate(" + (Math.random() * 50 - 25) + "px," + (Math.random() * 12 - 6) + "px)";
+    return;
+  }
+  busy = true; buzz(20);
+  b.style.transform = ""; b.classList.add("chosen");
+  box.querySelectorAll(".opt").forEach(x => { if (x !== b) x.classList.add("dim"); });
+  if (o.go) { if (s.log) log(s.log + o.t); } else log("Финал: " + s.pre + " -> " + o.t);
+  setTimeout(() => {
+    if (o.say) {
+      const c = renderDone(o.say, o.x);
+      if (o.go) setTimeout(() => { if (app.firstChild === c) render(o.go); }, 2400);
+    } else render(o.go || "done");
+  }, 450);
+}
+
+function render(id) {
+  if (id === "fail") return renderFail();
+  if (id === "done") return renderDone();
+  const s = S[id], card = el("section", "card"), h = el("h1", "q"), box = el("div");
+  card.append(h, box); mount(card); busy = true;
+  typeText(h, s.title, () => {
+    s.opts.forEach((o, i) => {
+      const b = el("button", "opt"); b.type = "button";
+      b.append(el("span", "n", String(i + 1)), el("span", null, o.t));
+      b.style.animationDelay = (i * 70) + "ms";
+      b.onclick = () => pick(s, o, b, box);
+      box.append(b);
+    });
+    if (s.back) { const bk = el("button", "back", "← В начало"); bk.type = "button"; bk.onclick = () => render("q1"); card.append(bk); }
+    busy = false;
+  });
+}
+
+function renderFail() {
+  const card = el("section", "card"), img = el("img", "pic");
+  img.src = "7.jpg.jpg"; img.alt = "";
+  card.append(img, el("h1", "q", "Плохо Алёна, пробуй снова"));
+  if (tries > 1) card.append(el("span", "chip", "×" + tries));
+  const b = el("button", "opt go", "Попробовать снова"); b.type = "button";
+  b.onclick = () => { tries++; dodges = 0; render("q1"); };
+  card.append(b); mount(card);
+}
+
+function renderDone(msg, cross) {
+  const card = el("section", "card"), ok = el("div", "ok");
+  ok.innerHTML = '<svg viewBox="0 0 24 24"><path d="' + (cross ? "M6 6l12 12M18 6L6 18" : "M5 12.5l4.5 4.5L19 7.5") + '"/></svg>';
+  card.append(ok, el("h1", "q", msg || "Ответ принят!"));
+  const bk = el("button", "back", "← В начало"); bk.type = "button"; bk.onclick = () => render("q1");
+  card.append(bk); mount(card); return card;
+}
+
+function renderLogin() {
+  const card = el("section", "card"), inp = el("input"), err = el("p", "err"), go = el("button", "opt go", "Войти");
+  inp.id = "in"; inp.type = "password"; inp.placeholder = "********"; inp.autocomplete = "off"; inp.setAttribute("aria-label", "Секретный код");
+  err.setAttribute("role", "alert"); go.type = "button";
+  const check = () => {
+    if (inp.value === CODE) { log("Вход"); render("q1"); return; }
+    err.textContent = "Неверный код!"; shake(inp); buzz([30, 40, 30]);
+  };
+  go.onclick = check;
+  inp.onkeydown = e => { if (e.key === "Enter") check(); };
+  card.append(el("h1", "q", "Введите секретный код"), inp, err, go);
+  mount(card);
+}
+
+renderLogin();
+</script>
+</body>
+</html>
